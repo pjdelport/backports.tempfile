@@ -15,6 +15,10 @@ setup(
     setup_requires=['setuptools_scm'],
     use_scm_version=True,
 
+    install_requires=[
+        'backports.weakref',
+    ],
+
     license='Python Software Foundation License',
     classifiers=[
         'Development Status :: 6 - Mature',
