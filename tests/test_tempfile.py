@@ -4,7 +4,7 @@ Partial backport of Python 3.5's test.test_tempfile:
     BaseTestCase
     TestTemporaryDirectory
 
-Backport modifications are marked with marked with "XXX backport".
+Backport modifications are marked with "XXX backport".
 """
 import tempfile
 import errno
