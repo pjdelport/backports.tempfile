@@ -47,7 +47,7 @@ class BaseTestCase(unittest.TestCase):
         self._warnings_manager.__exit__(None, None, None)
 
 
-    def nameCheck(self, name, dir, pre, suf):
+    def nameCheck(self, name, dir, pre, suf):  # pragma: no cover (test support code)
         (ndir, nbase) = os.path.split(name)
         npre  = nbase[:len(pre)]
         nsuf  = nbase[len(nbase)-len(suf):]
