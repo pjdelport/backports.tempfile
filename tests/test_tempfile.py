@@ -16,8 +16,8 @@ import warnings
 from backports.tempfile import TemporaryDirectory
 
 import unittest
-import support_backports as support
-import script_helper
+from backports.test import support
+from backports.test.support import script_helper
 
 
 # XXX backport: ResourceWarning was added in Python 3.2.
