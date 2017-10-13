@@ -5,7 +5,7 @@ backports.tempfile
 This package provides backports of new features in Python's tempfile_ module
 under the backports_ namespace.
 
-.. _tempfile: https://docs.python.org/3.5/library/tempfile.html
+.. _tempfile: https://docs.python.org/3.6/library/tempfile.html
 .. _backports: https://pypi.python.org/pypi/backports
 
 .. image:: https://img.shields.io/pypi/v/backports.tempfile.svg
@@ -27,8 +27,8 @@ under the backports_ namespace.
 Supported Python versions
 =========================
 
-* CPython: 2.7, 3.4, 3.5
-* PyPy
+* CPython: 2.7, 3.4, 3.5, 3.6
+* PyPy, PyPy3
 
 
 Backported functionality

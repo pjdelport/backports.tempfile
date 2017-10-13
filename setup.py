@@ -1,12 +1,19 @@
 # coding: utf-8
 from setuptools import setup, find_packages
 
+
+def README():
+    with open('README.rst') as f:
+        return f.read()
+
+
 setup(
     name='backports.tempfile',
     description="Backport of new features in Python's tempfile module",
+    long_description=README(),
     url='https://github.com/pjdelport/backports.tempfile',
 
-    author=u'Piët Delport',
+    author='Pi Delport',
     author_email='pjdelport@gmail.com',
 
     package_dir={'': 'src'},
@@ -29,6 +36,8 @@ setup(
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: Implementation :: PyPy',
         'Topic :: Software Development :: Libraries :: Python Modules',
     ],
 )
