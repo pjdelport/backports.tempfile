@@ -1,9 +1,16 @@
 # coding: utf-8
 from setuptools import setup, find_packages
 
+
+def README():
+    with open('README.rst') as f:
+        return f.read()
+
+
 setup(
     name='backports.tempfile',
     description="Backport of new features in Python's tempfile module",
+    long_description=README(),
     url='https://github.com/pjdelport/backports.tempfile',
 
     author='Pi Delport',
