@@ -46,11 +46,10 @@ class BaseTestCase(unittest.TestCase):
     def tearDown(self):
         self._warnings_manager.__exit__(None, None, None)
 
-
     def nameCheck(self, name, dir, pre, suf):  # pragma: no cover (test support code)
         (ndir, nbase) = os.path.split(name)
-        npre  = nbase[:len(pre)]
-        nsuf  = nbase[len(nbase)-len(suf):]
+        npre = nbase[:len(pre)]
+        nsuf = nbase[len(nbase)-len(suf):]
 
         # XXX backport: TODO: These do not test for unicode vs. str/bytes under Python < 3.
         # XXX backport: TODO: Enable unicode_literals and make these pass?
@@ -118,7 +117,7 @@ class TestTemporaryDirectory(BaseTestCase):
                             "TemporaryDirectory %s does not exist" % d.name)
             d.cleanup()
             self.assertFalse(os.path.exists(d.name),
-                        "TemporaryDirectory %s exists after cleanup" % d.name)
+                             "TemporaryDirectory %s exists after cleanup" % d.name)
         finally:
             os.rmdir(dir)
 
@@ -150,9 +149,9 @@ class TestTemporaryDirectory(BaseTestCase):
         try:
             d = self.do_create(dir=dir)
             name = d.name
-            del d # Rely on refcounting to invoke __del__
+            del d  # Rely on refcounting to invoke __del__
             self.assertFalse(os.path.exists(name),
-                        "TemporaryDirectory %s exists after __del__" % name)
+                             "TemporaryDirectory %s exists after __del__" % name)
         finally:
             os.rmdir(dir)
 
@@ -193,7 +192,7 @@ class TestTemporaryDirectory(BaseTestCase):
                 rc, out, err = script_helper.assert_python_ok("-c", code)
                 tmp_name = out.decode().strip()
                 self.assertFalse(os.path.exists(tmp_name),
-                            "TemporaryDirectory %s exists after cleanup" % tmp_name)
+                                 "TemporaryDirectory %s exists after cleanup" % tmp_name)
                 err = err.decode('utf-8', 'backslashreplace')
                 self.assertNotIn("Exception ", err)
                 # XXX backport:
@@ -221,7 +220,7 @@ class TestTemporaryDirectory(BaseTestCase):
             rc, out, err = script_helper.assert_python_ok("-c", code)
             tmp_name = out.decode().strip()
             self.assertFalse(os.path.exists(tmp_name),
-                        "TemporaryDirectory %s exists after cleanup" % tmp_name)
+                             "TemporaryDirectory %s exists after cleanup" % tmp_name)
             err = err.decode('utf-8', 'backslashreplace')
             self.assertNotIn("Exception ", err)
             # XXX backport:
@@ -239,7 +238,7 @@ class TestTemporaryDirectory(BaseTestCase):
                 del d
                 support.gc_collect()
             self.assertFalse(os.path.exists(name),
-                        "TemporaryDirectory %s exists after __del__" % name)
+                             "TemporaryDirectory %s exists after __del__" % name)
 
     def test_multiple_close(self):
         # Can be cleaned-up many times without error
@@ -255,3 +254,15 @@ class TestTemporaryDirectory(BaseTestCase):
             self.assertTrue(os.path.exists(name))
             self.assertEqual(name, d.name)
         self.assertFalse(os.path.exists(name))
+
+    def test_passthrough_imports(self):
+        from backports import tempfile as backports_tempfile
+        import tempfile
+
+        stdlib_exports = set([i for i in dir(tempfile) if not i.startswith("_")])
+        backports_exports = set([i for i in dir(backports_tempfile) if not i.startswith("_")])
+        for i in stdlib_exports:
+            if i != "template":
+                self.assertIn(i, backports_exports)
+        for i in backports_exports - stdlib_exports:
+            self.assertIn(i, {"TemporaryDirectory", "absolute_import"})
